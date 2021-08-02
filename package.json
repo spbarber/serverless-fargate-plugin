@@ -2,6 +2,7 @@
   "name": "serverless-fargate-plugin",
   "version": "1.2.2",
   "description": "A simple plugin to stand up an ECS FARGATE Cluster with a couple of services.",
+  "repository":"https://github.com/spbarber/serverless-fargate-plugin",
   "main": "index.js",
   "homepage": "https://github.com/honerlaw/serverless-fargate-plugin/issues",
   "scripts": {
