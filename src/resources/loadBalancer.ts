@@ -42,7 +42,6 @@ export class LoadBalancer extends Resource<IClusterOptions> {
         });
     }
 
-
     /* Security groups */
     private getELBSecurityGroupsRef(): any {;
         if (this.cluster.getVPC().useExistingVPC()) {

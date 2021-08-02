@@ -43,11 +43,10 @@ export class Cluster extends Resource<IClusterOptions> {
     }
 
     public isPublic(): boolean {
-        return this.options.public;
+        return this.options.services[0].public;
     }
 
     public generate(): any {
-
         // generate the defs for each service
         const defs: any[] = this.services.map((service: Service): any => service.generate());
 

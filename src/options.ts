@@ -44,6 +44,7 @@ export interface IServiceOptions {
     name: string;
     cpu: number;
     memory: number;
+    public: boolean;
     port?: number; // docker port (the port exposed on the docker image) - if not specified random port will be used - usefull for busy private subnets 
     entryPoint: string[]; //custom container entry point
     disableELB?: boolean; //useful for disabling ELB listeners on a cluster that has ELB and more tasks with ELB enabled

@@ -29,7 +29,7 @@ class ServerlessFargatePlugin {
         //For each cluster
         for (let clusterOption of options) {
             if (clusterOption && clusterOption.vpc) { //sanity check for empty objects
-                //multiple self-created VPCs will be a problem here, TODO: solve this with cluster prefix on resouces
+                //multiple self-created VPCs will be a problem here, TODO: solve this with cluster prefix on resources
                 const vpc: VPC = new VPC(stage, clusterOption.vpc, clusterOption.tags);
                 const cluster: Cluster = new Cluster(stage, clusterOption, vpc, serviceName, clusterOption.tags);
 
@@ -46,7 +46,7 @@ class ServerlessFargatePlugin {
                     vpc.getOutputs(),
                     cluster.getOutputs()
                 );
-            } else console.info('serverless-fargate-plugin: skipping cluster creation, missing informations (check required VPC).');
+            } else console.info('serverless-fargate-plugin: skipping cluster creation, missing information (check required VPC).');
         }
     }
 

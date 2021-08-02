@@ -13,10 +13,10 @@ export class Service extends Resource<IServiceOptions> {
     public readonly protocols: Protocol[];
 
     public constructor(stage: string, options: IServiceOptions, cluster: Cluster, tags?: object) {
-        // camelcase a default name
+        // camel case a default name
         const safeResourceName = options.name
             .toLowerCase() // lowercase everything
-            .replace(/[^A-Za-z0-9]/g, ' ') // replace non alphanumeric with soaces
+            .replace(/[^A-Za-z0-9]/g, ' ') // replace non alphanumeric with spaces
             .split(' ') // split on those spaces
             .filter((piece: string): boolean => piece.trim().length > 0) // make sure we only accept 1 char or more
             .map((piece: string): string => piece.charAt(0).toUpperCase() + piece.substring(1)) // capitalize each piece
@@ -58,6 +58,10 @@ export class Service extends Resource<IServiceOptions> {
             }
         }); 
         return outputs;
+    }
+
+    public isPublic(): boolean {
+        return this.options.public;
     }
 
     private generateService(): object {
