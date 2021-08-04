@@ -94,7 +94,8 @@ export class Protocol extends Resource<IServiceProtocolOptions> {
                 "Properties": {
                     "Actions": [{
                         "TargetGroupArn": {
-                            "Ref": this.service.getName(NamePostFix.TARGET_GROUP)
+                            //"Ref": this.service.getName(NamePostFix.TARGET_GROUP)
+                            "Ref": `${this.stage}${this.service.getName(NamePostFix.TARGET_GROUP)}`
                         },
                         "Type": "forward"
                     }],

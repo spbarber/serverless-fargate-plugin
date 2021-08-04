@@ -101,7 +101,8 @@ export class Service extends Resource<IServiceOptions> {
                                 "ContainerName": this.getName(NamePostFix.CONTAINER_NAME),
                                 "ContainerPort": this.ports[0],
                                 "TargetGroupArn": {
-                                    "Ref": this.getName(NamePostFix.TARGET_GROUP)
+                                    //"Ref": this.getName(NamePostFix.TARGET_GROUP)
+                                    "Ref": `${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`
                                 }
                             }
                         ]
