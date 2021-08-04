@@ -138,8 +138,7 @@ export class LoadBalancer extends Resource<IClusterOptions> {
                     "Properties": {
                         "DefaultActions": [{ //Note: this is just the default, no biggie
                             "TargetGroupArn": {
-                                //"Ref": defaultService.getName(NamePostFix.TARGET_GROUP)
-                                "Ref": `${this.stage}${defaultService.getName(NamePostFix.TARGET_GROUP)}`
+                                "Ref": defaultService.getName(NamePostFix.TARGET_GROUP)
                             },
                             "Type": "forward"
                         }],

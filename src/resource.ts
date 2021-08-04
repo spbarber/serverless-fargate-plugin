@@ -9,6 +9,7 @@ export enum NamePostFix {
     SECURITY_GROUP_INGRESS_ALB = "SecurityGroupIngressAlb",
     SECURITY_GROUP_INGRESS_SELF = "SecurityGroupIngressSelf",
     LOG_GROUP = "LogGroup",
+    EXECUTION_ROLE_NAME = "ECSServiceExecutionRole",
 
     // VPC specific
     VPC = "VPC",
@@ -61,7 +62,7 @@ export abstract class Resource<T> {
 
     public getName(namePostFix: NamePostFix): string {
         if (this.namePrefix) {
-            return (this.namePrefix + namePostFix.toString()).substr(0,32);
+            return (this.namePrefix + namePostFix.toString() + this.stage).substr(0,32);
         }
         return (namePostFix + this.stage).substr(0, 32);
     }

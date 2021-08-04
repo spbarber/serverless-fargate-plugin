@@ -101,8 +101,7 @@ export class Service extends Resource<IServiceOptions> {
                                 "ContainerName": this.getName(NamePostFix.CONTAINER_NAME),
                                 "ContainerPort": this.ports[0],
                                 "TargetGroupArn": {
-                                    //"Ref": this.getName(NamePostFix.TARGET_GROUP)
-                                    "Ref": `${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`
+                                    "Ref": this.getName(NamePostFix.TARGET_GROUP)
                                 }
                             }
                         ]
@@ -126,7 +125,7 @@ export class Service extends Resource<IServiceOptions> {
                     "RequiresCompatibilities": [
                         "FARGATE"
                     ],
-                    "ExecutionRoleArn": this.getExecutionRoleValue(),
+                    "ExecutionRoleArn": this.getName(NamePostFix.EXECUTION_ROLE_NAME),
                     "TaskRoleArn": this.options.taskRoleArn ? this.options.taskRoleArn : ({
                         "Ref": "AWS::NoValue"
                     }),
@@ -165,10 +164,8 @@ export class Service extends Resource<IServiceOptions> {
 
     private generateTargetGroup(): any {
         if (this.cluster.getOptions().disableELB || this.options.disableELB) return {};
-        let tGroupName = `${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`
         return {
-            //[this.getName(NamePostFix.TARGET_GROUP)]: {
-            [tGroupName]: {
+            [this.getName(NamePostFix.TARGET_GROUP)]: {
                 "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
                 "DeletionPolicy": "Delete",
                 "Properties": {
@@ -179,8 +176,7 @@ export class Service extends Resource<IServiceOptions> {
                     "HealthCheckTimeoutSeconds": 5,
                     "HealthyThresholdCount": 2,
                     "TargetType": "ip",
-                    "Name": tGroupName,
-                    //"Name": this.getName(NamePostFix.TARGET_GROUP),
+                    "Name": this.getName(NamePostFix.TARGET_GROUP),
                     "Port": this.ports[0],
                     "Protocol": "HTTP",
                     "UnhealthyThresholdCount": 2,
@@ -198,11 +194,11 @@ export class Service extends Resource<IServiceOptions> {
      */
     private generateExecutionRole(): any {
         return {
-            [Service.EXECUTION_ROLE_NAME]: {
+            [this.getName(NamePostFix.EXECUTION_ROLE_NAME)]: {
                 "Type": "AWS::IAM::Role",
                 "DeletionPolicy": "Delete",
                 "Properties": {
-                    "RoleName": `${Service.EXECUTION_ROLE_NAME}-${this.stage}`,
+                    "RoleName": this.getName(NamePostFix.EXECUTION_ROLE_NAME),
                     ...(this.getTags() ? { "Tags": this.getTags() } : {}),
                     "AssumeRolePolicyDocument": {
                         "Statement": [
@@ -265,8 +261,7 @@ export class Service extends Resource<IServiceOptions> {
             return executionRoleArn;
         }
         return {
-            //"Ref": Service.EXECUTION_ROLE_NAME
-            "Ref": `${Service.EXECUTION_ROLE_NAME}-${this.stage}`
+            "Ref": Service.EXECUTION_ROLE_NAME
         };
     }
 
