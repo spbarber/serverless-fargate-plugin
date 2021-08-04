@@ -101,7 +101,8 @@ export class Service extends Resource<IServiceOptions> {
                                 "ContainerName": this.getName(NamePostFix.CONTAINER_NAME),
                                 "ContainerPort": this.ports[0],
                                 "TargetGroupArn": {
-                                    "Ref": this.getName(NamePostFix.TARGET_GROUP)
+                                    //"Ref": this.getName(NamePostFix.TARGET_GROUP)
+                                    "Ref": `${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`
                                 }
                             }
                         ]
@@ -199,7 +200,7 @@ export class Service extends Resource<IServiceOptions> {
                 "Type": "AWS::IAM::Role",
                 "DeletionPolicy": "Delete",
                 "Properties": {
-                    "RoleName": Service.EXECUTION_ROLE_NAME,
+                    "RoleName": `${Service.EXECUTION_ROLE_NAME}${this.stage}`,
                     ...(this.getTags() ? { "Tags": this.getTags() } : {}),
                     "AssumeRolePolicyDocument": {
                         "Statement": [
@@ -262,7 +263,8 @@ export class Service extends Resource<IServiceOptions> {
             return executionRoleArn;
         }
         return {
-            "Ref": Service.EXECUTION_ROLE_NAME
+            //"Ref": Service.EXECUTION_ROLE_NAME
+            "Ref": `${Service.EXECUTION_ROLE_NAME}-${this.stage}`
         };
     }
 
