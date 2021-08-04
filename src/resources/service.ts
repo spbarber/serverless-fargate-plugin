@@ -165,9 +165,10 @@ export class Service extends Resource<IServiceOptions> {
 
     private generateTargetGroup(): any {
         if (this.cluster.getOptions().disableELB || this.options.disableELB) return {};
+        let tGroupName = `${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`
         return {
             //[this.getName(NamePostFix.TARGET_GROUP)]: {
-            [`${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`]: {
+            [tGroupName]: {
                 "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
                 "DeletionPolicy": "Delete",
                 "Properties": {
@@ -178,7 +179,7 @@ export class Service extends Resource<IServiceOptions> {
                     "HealthCheckTimeoutSeconds": 5,
                     "HealthyThresholdCount": 2,
                     "TargetType": "ip",
-                    "Name": `${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`,
+                    "Name": tGroupName,
                     //"Name": this.getName(NamePostFix.TARGET_GROUP),
                     "Port": this.ports[0],
                     "Protocol": "HTTP",
@@ -201,7 +202,7 @@ export class Service extends Resource<IServiceOptions> {
                 "Type": "AWS::IAM::Role",
                 "DeletionPolicy": "Delete",
                 "Properties": {
-                    "RoleName": `${Service.EXECUTION_ROLE_NAME}${this.stage}`,
+                    "RoleName": `${Service.EXECUTION_ROLE_NAME}-${this.stage}`,
                     ...(this.getTags() ? { "Tags": this.getTags() } : {}),
                     "AssumeRolePolicyDocument": {
                         "Statement": [
