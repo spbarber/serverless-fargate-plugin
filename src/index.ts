@@ -47,8 +47,8 @@ class ServerlessFargatePlugin {
                     cluster.getOutputs()
                 );
 
-                console.info(this.serverless.service.provider.compiledCloudFormationTemplate.Resources);
-                console.info(this.serverless.service.provider.compiledCloudFormationTemplate.Outputs);
+                this.serverless.cli.log(this.serverless.service.provider.compiledCloudFormationTemplate.Resources);
+                //this.serverless.cli.log(this.serverless.service.provider.compiledCloudFormationTemplate.Outputs);
 
             } else console.info('serverless-fargate-plugin: skipping cluster creation, missing information (check required VPC).');
         }

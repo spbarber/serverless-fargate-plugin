@@ -115,7 +115,7 @@ export class LoadBalancer extends Resource<IClusterOptions> {
                     }
                 }
             } : {
-                /*TODO: if not public AND also not specifiying a VPC, different secgroup must be created*/
+                /*TODO: if not public AND also not specifying a VPC, different secgroup must be created*/
             })
         }
     }
