@@ -166,7 +166,8 @@ export class Service extends Resource<IServiceOptions> {
     private generateTargetGroup(): any {
         if (this.cluster.getOptions().disableELB || this.options.disableELB) return {};
         return {
-            [this.getName(NamePostFix.TARGET_GROUP)]: {
+            //[this.getName(NamePostFix.TARGET_GROUP)]: {
+            [`${this.stage}${this.getName(NamePostFix.TARGET_GROUP)}`]: {
                 "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
                 "DeletionPolicy": "Delete",
                 "Properties": {
